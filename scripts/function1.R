@@ -1,7 +1,7 @@
 library(dplyr)
 library(tidyr)
 library(plotly)
-library(pracma)
+
 
 df <- read.csv("../data/uw_courses.csv", stringsAsFactors = F)
 
