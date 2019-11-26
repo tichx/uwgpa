@@ -11,11 +11,13 @@ sum_grade <- function(grade) {
   return(sum(as.numeric(grade), na.rm = TRUE))
 }
 
-plot_graph <- function(df, class_code){
+plot_graph <- function(df, code) {
 class <- df %>%
   mutate(gp = as.numeric(student_count) * as.numeric(avg_gpa)) %>% 
-  mutate(class_name = paste(dept_abbrev,course_no)) %>% 
-  filter(class_name == class_code) %>% 
+  mutate(class_name = paste(dept_abbrev,course_no))
+
+class <- class %>% 
+  filter(class_name == code) %>% 
   group_by(lastname) %>%
   summarize(
     firstname = firstname[1],
