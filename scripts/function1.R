@@ -7,6 +7,46 @@ library(shiny)
 
 df <- read.csv("../data/uw_courses.csv", stringsAsFactors = F)
 
+plot_course <- function(df, class) {
+  new_df <- df %>% 
+    mutate(course_code = paste(dept_abbrev,course_no)) %>% 
+    mutate(title = paste0(course_code, ": ", course_title)) %>% 
+    mutate(quarter = paste0(year, term)) %>% 
+    filter(course_code == toupper(class))
+  new_df$firstname[is.na(new_df$firstname)] <-"Prof."
+  new_df$lastname[is.na(new_df$lastname)] <- "Unknown"
+  new_df <- new_df %>% 
+    mutate(name = paste0(lastname,", ", firstname)) %>% 
+    mutate(course_code = paste(dept_abbrev,course_no)) %>% 
+    group_by(name, course_code, quarter) %>% 
+    summarise(enrolled = sum(as.numeric(student_count),na.rm = T),
+              grade = round(sum(as.numeric(avg_gpa) * as.numeric(student_count), na.rm = T) / enrolled,2),
+              course_title = title[1]
+    )
+  p <- plot_ly(
+    data = new_df,
+    x = ~enrolled,
+    y = ~grade,
+    type = "scatter",
+    mode = "markers",
+    hovertemplate = paste(
+      new_df$quarter,
+      "<br>", "Enrolled: ", new_df$enrolled,
+      "<br>", "GPA: ", new_df$grade,
+      "<br>", "Professor: ", new_df$name
+    ),
+    marker = list(size = sqrt(new_df$enrolled) * 4, line = list(color = 'rgba(220,220,220, .8)', width = 2)),
+    color = ~name,
+    text = ~quarter,
+    textposition = 'middle center',
+    textfont = list(color = '#fffff', size = 8)
+  ) %>% 
+    layout(
+      xaxis = list(title = "Students Enrolled"),
+      yaxis = list(title = "Average GPA")
+    )
+  p
+}
 
 get_chart_text <- function(df, class) {
   new_df <- df %>%
@@ -18,7 +58,7 @@ get_chart_text <- function(df, class) {
       title = course_title[1],
       total_enrolled = sum(as.numeric(student_count), na.rm = T),
       avg_gpa = round(sum(as.numeric(avg_gpa) * as.numeric(student_count), na.rm = T) / total_enrolled, 2),
-      A_perc = round(sum(as.numeric(A) / total_enrolled) * 100, 1)
+      A_perc = round(sum(as.numeric(A) / total_enrolled, na.rm = T) * 100, 1)
     )
   text <- paste0(new_df$course, ": ", new_df$title, " had ", new_df$total_enrolled, " students enrolled to ", new_df$sections, " section(s) in the past eight years. The class had an average GPA of ", new_df$avg_gpa, ", and ", new_df$A_perc, "% received a grade of 3.9/4.0.")
   text
@@ -88,8 +128,6 @@ plot_graph <- function(df, school) {
       avg = round(tgp / student, 2),
       A_perc = round(A / student, 3) * 100
     )
-
-
   plot_ly(
     data = df,
     x = ~A_perc,
@@ -108,7 +146,8 @@ plot_graph <- function(df, school) {
     layout(
       title = paste0("Every course at ", school, ", by GPA"),
       xaxis = list(title = "Percentage % of 4.0 given (A)"),
-      yaxis = list(title = "Average GPA")
+      yaxis = list(title = "Average GPA"),
+      showlegend = FALSE
     )
 }
 
@@ -148,7 +187,7 @@ page_one <- tabPanel(
     ),
     mainPanel(
       h3("UW course visualization - by schools"),
-      plotlyOutput(outputId = "gg")
+      plotlyOutput(outputId = "gg", height = "700px", width = "1100px")
     )
   )
 )
@@ -159,13 +198,17 @@ page_two <- tabPanel(
   sidebarLayout(
     sidebarPanel(
       width = 2,
-      textInput("text", label = h3("Course"), value = "INFO 201")
+      textInput("text", label = h3("Course"), value = "INFO 201"),
+      p("Enter course code + course number, i.e. \"cse 154\". Please put white space in between.")
     ),
     mainPanel(
       h3("Grade Distribution Lookup"),
-      p("This chart shows grade distribution for every course offered at the UW for the past 8 years. Enter the course code on the left to search."),
       plotlyOutput(outputId = "chart"),
-      textOutput(outputId = "message")
+      plotlyOutput(outputId = "course"),
+      strong(textOutput(outputId = "message")),
+      br(),
+      br(),
+      br()
     )
   )
 )
@@ -179,6 +222,7 @@ my_server <- function(input, output) {
   output$gg <- renderPlotly(plot_graph(df, input$radio))
   output$chart <- renderPlotly(plot_chart(df, input$text))
   output$message <- renderText(get_chart_text(df, input$text))
+  output$course <- renderPlotly(plot_course(df, input$text))
 }
 
 shinyApp(ui = my_ui, server = my_server)
