@@ -1,2 +1,2 @@
-*.RData
-*.Rhistory
+scripts/*.RData
+scripts/*.Rhistory
