@@ -226,15 +226,6 @@ caculate <- function(info_data, sam_num) {
   return(courses)
 }
 
-
-
-# additional function pulling the course titles 
-courses_titles <- function(data) {
-  titles <- data %>%
-    distinct(dept_abbrev) %>%
-    pull(dept_abbrev)
-}
-
 # Compute the vector of departments for ui
 dept_list <- unique(df %>%
                       select(department_text) %>%
