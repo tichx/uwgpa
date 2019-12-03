@@ -135,10 +135,11 @@ plot_graph <- function(df, school) {
     type = "scatter",
     mode = "markers",
     hovertemplate = paste(
+      "<b>",
       df$sub_college,
       "<br>", df$code, df$title,
-      "<br>", df$sections, " section(s),", df$student, "students",
-      "<br>", df$A_perc, "%", "received 4.0", "average GPA", df$avg
+      "</b><br><br>", df$sections, "section(s),", df$student, "students",
+      "<br>", df$A_perc, "%", "received 4.0<br>", "GPA average:", df$avg
     ),
     marker = list(size = sqrt(df$student)),
     color = ~college
@@ -316,18 +317,18 @@ avg_gpa_chart <- function(df, input_dept, input_level) {
       name = ~dept_abbrev,
       hovertemplate = ifelse(is.na(combined_dept_df[["last_offered"]]),
                              paste(
-                               "course id:", combined_dept_df[["course_id"]],
-                               "<br>course title:", combined_dept_df[["course_title"]],
-                               "<br>avg student:", combined_dept_df[["avg_student"]],
-                               "<br>avg gpa:", combined_dept_df[["avg_gpa"]],
-                               "<br>first offered:", combined_dept_df[["first_offered"]]
+                               "<br><b>", combined_dept_df[["course_id"]],
+                               ": ", combined_dept_df[["course_title"]],
+                               "</b><br><br>Class size:", combined_dept_df[["avg_student"]], "students on average",
+                               "<br>GPA:", combined_dept_df[["avg_gpa"]], "on average",
+                               "<br>First offered:", combined_dept_df[["first_offered"]]
                              ),
                              paste(
-                               "course id:", combined_dept_df[["course_id"]],
-                               "<br>course title:", combined_dept_df[["course_title"]],
-                               "<br>avg student:", combined_dept_df[["avg_student"]],
-                               "<br>avg gpa:", combined_dept_df[["avg_gpa"]],
-                               "<br>first offered:", combined_dept_df[["first_offered"]],
+                               "<br><b>", combined_dept_df[["course_id"]],
+                               ": ", combined_dept_df[["course_title"]],
+                               "</b><br><br>Class size:", combined_dept_df[["avg_student"]], "students on average",
+                               "<br>GPA:", combined_dept_df[["avg_gpa"]], "on average",
+                               "<br>First offered:", combined_dept_df[["first_offered"]],
                                "<br>last offered:", combined_dept_df[["last_offered"]]
                              )
       ),
