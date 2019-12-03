@@ -25,7 +25,37 @@ filter_data <- function(data, depart) {
   return(fixed_data)
 }
 
+filter_data_for_a <- function(data, name) {
+  myclass <- data %>%
+    filter(dept_abbrev == name) %>%
+    replace(. == "NULL", 0) %>%
+    select(dept_abbrev, course_no, A, student_count)
+  
+  myclass$A <- as.numeric(as.character(myclass$A))
+  myclass$student_count <- as.numeric(as.character(myclass$student_count))
+  myclass
 
+}
+
+
+
+
+
+final_data_a <- function(data, num) {
+  data1 <-  data %>%
+    group_by(dept_abbrev, course_no) %>%
+    summarise(
+      total_student = sum(student_count), 
+      a_student = sum(A),
+    ) %>%
+    ungroup() %>%
+    mutate(className = paste(dept_abbrev, course_no)) %>%
+    group_by(className) %>%
+    select(className, total_student, a_student) %>%
+    summarize(a_rate = round(a_student / total_student, digit = 3) * 100) %>%
+    arrange(-a_rate) %>%
+    head (num)
+}
 
 
 # caculate the Withdraw and Fail rate for the course
@@ -52,7 +82,7 @@ caculate <- function(info_data, sam_num) {
 
 
 # Setting server
-server <- function(input, output) {
+my_server <- function(input, output) {
   
   # plot the chart
   output$fail_plot <- renderPlot({
@@ -70,6 +100,18 @@ server <- function(input, output) {
         y = "Percentage of fails/withdraw students %",
         fill = "Fail / Drop rate"
       )
+  })
+  
+  output$a_plot <- renderPlot({
+    filtered_data <- filter_data_for_a(df, input$department)
+    final_data <- final_data_a(filtered_data, input$sample_num)
+    ggplot(final_data, aes(x=`className`, y=a_rate, label=a_rate)) + 
+      geom_point(stat='identity', aes(col=className), size=6) +
+      geom_text(color="white", size=2) + 
+      labs(title="A rate of department courses", 
+           subtitle="A: GPA from 3.9-4.0")+
+      ylim(0, 100) +
+      coord_flip()
   })
 }
 
@@ -100,16 +142,17 @@ page_one <- tabPanel(
       )
     ), 
     mainPanel(
-      plotOutput(outputId = "fail_plot")
+      plotOutput(outputId = "fail_plot"),
+      plotOutput(outputId = "a_plot")
     )
   )
 )
 
-ui <- navbarPage(
+my_ui <- navbarPage(
   "Function2",
   page_one
 )
 
 
 # Running shiny
-shinyApp(ui = ui, server = server)
+shinyApp(ui = my_ui, server = my_server)

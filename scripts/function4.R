@@ -1,6 +1,7 @@
 library(ggplot2)
 library(dplyr)
 library(tidyr)
+library(shiny)
 theme_set(theme_bw())
 
 #import data set
@@ -32,11 +33,14 @@ data1 <- myclass %>%
 
 #Return a Plot
 
-ggplot(data1, aes(x=`className`, y=a_rate, label=a_rate)) + 
-  geom_point(stat='identity', aes(col=className), size=6) +
-  geom_text(color="white", size=2) + 
-  labs(title="A rate of department courses", 
-       subtitle="A: GPA from 3.9-4.0")+
-  ylim(0, 100) +
-  coord_flip()
+output$a_plot <- renderPlot({
+  ggplot(data1, aes(x=`className`, y=a_rate, label=a_rate)) + 
+    geom_point(stat='identity', aes(col=className), size=6) +
+    geom_text(color="white", size=2) + 
+    labs(title="A rate of department courses", 
+        subtitle="A: GPA from 3.9-4.0")+
+    ylim(0, 100) +
+    coord_flip()
+})
 }
+
