@@ -4,7 +4,7 @@ A link to the shiny app can be found [here](https://tichx.shinyapps.io/finalproj
 
 # Welcome
 
-We are glad to see you here! As fellow UW students, one of the most frustrating situations to find yourself in is a course where all of your friends are in the "easier section". For most of us, it feels like this happens **all of the time**. This data visualization study hopes to dismystify such perception. 
+We are glad to see you here! As fellow UW students, one of the most frustrating situations to find yourself in is a course where all of your friends are in the "easier section". For most of us, it feels like this happens __all of the time__. This data visualization study hopes to dismystify such perception. 
 
 # About our Dataset
 
