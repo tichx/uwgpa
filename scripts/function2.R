@@ -27,9 +27,13 @@ filter_data <- function(data, depart) {
 
 filter_data_for_a <- function(data, name) {
   myclass <- data %>%
-    filter(dept_abbrev == name) %>%
     replace(. == "NULL", 0) %>%
     select(dept_abbrev, course_no, A, student_count)
+  
+  if (name != "ALL") {
+    myclass <- myclass %>%
+      filter(dept_abbrev == name)
+  } 
   
   myclass$A <- as.numeric(as.character(myclass$A))
   myclass$student_count <- as.numeric(as.character(myclass$student_count))
@@ -38,7 +42,7 @@ filter_data_for_a <- function(data, name) {
 }
 
 
-
+filter_data_for_a(df, "ALL")
 
 
 final_data_a <- function(data, num) {
@@ -105,11 +109,15 @@ my_server <- function(input, output) {
   output$a_plot <- renderPlot({
     filtered_data <- filter_data_for_a(df, input$department)
     final_data <- final_data_a(filtered_data, input$sample_num)
-    ggplot(final_data, aes(x=`className`, y=a_rate, label=a_rate)) + 
+    ggplot(final_data, aes(x=`className`, y=a_rate, label=paste0(a_rate, "%"))) + 
       geom_point(stat='identity', aes(col=className), size=6) +
       geom_text(color="white", size=2) + 
-      labs(title="A rate of department courses", 
-           subtitle="A: GPA from 3.9-4.0")+
+      labs(
+          title="Percentage of students receiving A (4.0/3.9)", 
+           x = "Course name",
+           y = "4.0 percentage",
+          color = "Class name"
+        ) +
       ylim(0, 100) +
       coord_flip()
   })
@@ -131,7 +139,7 @@ page_one <- tabPanel(
       selectInput(
         inputId = "department",
         label = "Course title",
-        choices = c(courses_titles(df))
+        choices = c("ALL", courses_titles(df))
       ),
       numericInput(
         inputId = "sample_num",
@@ -152,7 +160,6 @@ my_ui <- navbarPage(
   "Function2",
   page_one
 )
-
 
 # Running shiny
 shinyApp(ui = my_ui, server = my_server)
