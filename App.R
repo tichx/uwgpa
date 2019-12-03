@@ -3,7 +3,7 @@ library(dplyr)
 library(shiny)
 library(tidyr)
 
-source("UI.R")
-source("Server.R")
+source("ui.R")
+source("server.R")
 
 shinyApp(ui = my_ui, server = my_server)
