@@ -192,14 +192,10 @@ page_four <- tabPanel(
   )
 )
 
-about_page <- tabPanel(
-  HTML('')
-)
 
 my_ui <- navbarPage(
   theme = shinytheme("united"),
   "University of Washington GPA Analysis",
-  about_page,
   page_one,
   page_two,
   page_three,

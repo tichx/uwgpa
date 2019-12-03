@@ -10,11 +10,11 @@ We are glad to see you here! As fellow UW students, one of the most frustrating 
 
 In January 2019, the University of Washington responded to a Freedom of Information Act request (FOIA #16-456 and others) for "the grade distributions by percent and/or letter grade, for every class [...] at the University of Washihngton at Seattle". This dataset, now available on github, contains the breakdown of GPA for every course at The University of Washington. As noted in the FOIA response, some data was withheld to maintain FERPA compliance. 
 
-# About our Audience
+# About our audience
 
 Our target audience would be other University of Washington students who are looking to assess the competitiveness of their classes. By using this tool "GPA by course," students can find open and accurate historical data on the past sections offered by every professor in the past eight years. By selecting colleges from "GPA by college," users can understand overall GPA trend in a specific school, like College of Engineering. We hope to bring transparency to the course planning process and help everyone makes informed decisions.
 
-# Through the Investigation of ours We want to help
+# Questions we want to answer
 
 With our Shiny Web Application, we want to answer quesitions such as:
 
@@ -51,11 +51,11 @@ We used a Shiny App to document our investigation and analysis of the data. In m
 
 * Chloe Chen: liuk25@uw.edu
 
-# Link to the data set we used:
+# Link to the data set we used
 * https://github.com/tichx/uw_gpa_dataset
 
-# Link to the examples we referenced:
+# Link to the examples we referenced
 * http://waf.cs.illinois.edu/discovery/grade_disparity_between_sections_at_uiuc/
 * http://waf.cs.illinois.edu/discovery/every_gen_ed_at_uiuc_by_gpa/
 * http://waf.cs.illinois.edu/discovery/gpa_of_every_course_at_illinois/
-* 
+* https://easy-a.net/
