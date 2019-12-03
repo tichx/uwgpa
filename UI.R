@@ -3,17 +3,17 @@ library(dplyr)
 library(plotly)
 library(shiny)
 library(tidyr)
-
+library(shinythemes)
 
 
 page_one <- tabPanel(
-  "Course offering by schools",
-  titlePanel("Controls"),
+  theme = shinytheme("united"),
+  "GPA by college",
   sidebarLayout(
     sidebarPanel(
       width = 2,
       radioButtons("radio",
-                   label = h3("View by schools"),
+                   label = h3("View college"),
                    choices = list(
                      "All" = "UW",
                      "College of Arts and Sciences" = "College of Arts and Sciences",
@@ -39,17 +39,84 @@ page_one <- tabPanel(
       ),
     ),
     mainPanel(
-      h3("UW course visualization - by schools"),
-      plotlyOutput(outputId = "gg", height = "700px", width = "1100px")
+      h3("View average GPA by college"),
+      plotlyOutput(outputId = "gg", height = "750px", width = "1200px")
     )
   )
 )
 
 page_two <- tabPanel(
-  "Grade Distribution",
-  
+  "GPA by department",
   sidebarLayout(
     sidebarPanel(
+      width = 2,
+      selectInput(
+        inputId = "dept",
+        label = "Choose department",
+        choices = c("Accounting", "Aeronautics & Astronautics", "Aerospace Studies", 
+                    "American Ethnic Studies", "American Indian Studies", "Anthropology", 
+                    "Applied Mathematics", "Architecture", "Art", "Art History", 
+                    "Arts and Sciences Dean's Ofc.", "Asian American Studies", "Asian Language and Literature", 
+                    "Astronomy", "Atmospheric Sciences", "Biochemistry", "Bioengineering", 
+                    "Bioethics & Humanities", "Biology", "Biomedical Informatics and Medical Education", 
+                    "Biostatistics", "Built Environments", "Business Administration", 
+                    "Chemical Engineering", "Chemistry", "Chicano Studies", "Civil & Environmental Engineering", 
+                    "Civil Engineering", "Classics", "College of Education", "College of Environment", 
+                    "Communication", "Comp. Literature,Cinema & Media Studies", "Comparative History of Ideas", 
+                    "Computer Science & Engineering", "Conjoint", "Construction Management", 
+                    "CSE Professional Program", "Ctr for Digital Arts & Experimental Media", 
+                    "Ctr. For Quantitative Sciences", "Ctr. Statistics & Social Sciences", 
+                    "Dance", "Drama", "Early Childhood & Family Studies", "Earth and Space Sciences", 
+                    "Economics", "Educ. Leadership & Policy Studies", "Educational Curriculum & Instruction", 
+                    "Educational Psychology", "Electrical Engineering", "Engineering", 
+                    "English", "Environmental Health", "Epidemiology", "Evans Sch of Public Policy/Gov", 
+                    "Executive Master Bus Admin Group", "Finance & Business Economics", 
+                    "French & Italian Studies", "Gender, Women, & Sexuality Studies", 
+                    "General Studies", "Genome Sciences", "Geography", "Germanic Languages", 
+                    "Global Health", "Health Services", "History - General", "Human Centered Design & Engr.", 
+                    "Immunology", "Industrial & Systems Engineering", "Infant and Early Childhood Mental Health", 
+                    "Info. Systems & Operations Mgmt.", "Information School", "Integrated Sciences", 
+                    "Integrated Social Sciences", "Interdisciplinary Graduate Program", 
+                    "Intr Global Innovation Exchange", "Jackson School International Studies", 
+                    "Landscape Architecture", "Law, Societies, and Justice", "Linguistics", 
+                    "Management & Organization", "Marketing & International Business", 
+                    "Materials Science & Engineering", "Mathematics", "Mechanical Engineering", 
+                    "Microbiology", "Music", "Naval Science", "Near East Language & Civilization", 
+                    "Neurobiology", "Neurobiology & Behavior", "Nursing - NSG", "Nursing - NURS", 
+                    "Nutritional Science", "Oral Health Sciences", "Orthodontics", 
+                    "Pathobiology", "Pediatric Dentistry", "Periodontics", "Philosophy", 
+                    "Physics", "Political Science", "Program on the Environment", 
+                    "Psychology", "Public Health Genetics", "Real Estate", "Rehabilitation Medicine", 
+                    "Scandinavian Studies", "Sch. of Aquatic & Fishery Sciences", 
+                    "School of Environmental and Forest Sciences", "School of Law", 
+                    "School of Marine & Envir. Affairs", "School of Nursing - Clinical", 
+                    "School of Nursing - Methods", "School of Oceanography", "School of Pharmacy", 
+                    "School of Public Health", "Slavic Language & Literature", "Social Work", 
+                    "Sociology", "Spanish & Portuguese Studies", "Special Education", 
+                    "Speech & Hearing Sciences", "Statistics", "Supply Chain Management", 
+                    "Teacher Education", "Undergraduate Interdisciplinary Program", 
+                    "University Conjoint", "Urban Design and Planning"),
+        selected = "Information School"
+      ),
+      selectInput(
+        inputId = "level",
+        label = "Choose course level",
+        choices = c("All", "100 level", "200 level", "300 level", "400 level",
+                    "500 level", "600 level", "700 level")
+      )
+    ),
+    mainPanel(
+      h3("View average GPA by department/major"),
+      plotlyOutput("scatter"), width = 10
+    )
+  )
+)
+
+page_three <- tabPanel(
+  "GPA by course",
+  sidebarLayout(
+    sidebarPanel(
+      label = h3("Lookup a course"),
       width = 2,
       textInput("text", label = h3("Course"), value = "INFO 201"),
       p("Enter course code + course number, i.e. \"cse 154\". Please put white space in between.")
@@ -67,14 +134,14 @@ page_two <- tabPanel(
 )
 
 # Setting ui 
-page_three <- tabPanel(
-  "The Best and the Worst",
+page_four <- tabPanel(
+  "Best & worst class",
   sidebarLayout(
     sidebarPanel(
       width = 2,
       selectInput(
         inputId = "department",
-        label = "Course title",
+        label = "From department",
         choices = c("ALL", "A A", "A S", "AAS", "ACADEM", "ACCTG", "AES", "AFRAM", "AIS", "AMATH", "ANTH", "ARAB", 
                     "ARCH", "ARCHY", "ART","ART H","ASIAN", "ASL", "ASTR", "ATM S", "B A", "B BIO", "B BUS",
                     "B CHIN", "B CMU", "B CUSP", "B ECON", "B EDUC", "B EE", "B H", "B HLTH","B NURS", "B SPAN",
@@ -107,51 +174,33 @@ page_three <- tabPanel(
                     "PABIO", "DENTGP", "SCM", "ARTS", "ARTSCI", "BIBHEB", "CMS", "DATA", "PUBPOL", "T LAW", "TBIOMD", "CESI",
                     "CSE M", "GEEZ", "BISAES", "CESG", "CET", "CEWA", "JEW ST", "MOLENG", "PSYCAP", "SOC WL", "T BIOL", "T CHEM", "T GEOS",
                     "T LAX", "T PHYS", "T UDE", "TBANLT", "TCMP", "TECHIN", "TEE", "B BECN", "OHS", "PSYCLN", "COMMLD", "EE P", "IECMH"),
+        selected = "INFO"
       ),
       numericInput(
         inputId = "sample_num",
-        label = "Numer of samples",
+        label = "Show top N",
         value = 10,
         min = 1,
         max = NA
       )
     ), 
     mainPanel(
+      h3("Highest failure/4.0 rate from a department"),
       plotOutput(outputId = "fail_plot"),
       plotOutput(outputId = "a_plot")
     )
   )
 )
 
-page_four <- tabPanel(
-  "Course offering by departments/majors",
-  titlePanel("Average GPA and class size for each course in the selected department/major"),
-  sidebarLayout(
-    sidebarPanel(
-      width = 2,
-      selectInput(
-        inputId = "dept",
-        label = "Choose department:",
-        choices = dept_list
-      ),
-      selectInput(
-        inputId = "level",
-        label = "Choose course level:",
-        choices = c("All", "100 level", "200 level", "300 level", "400 level",
-                    "500 level", "600 level", "700 level")
-      )
-    ),
-    mainPanel(
-      plotlyOutput("scatter"), width = 10
-    )
-  )
-)
+
 
 
 my_ui <- navbarPage(
-  "UW Courses & GPA",
+  theme = shinytheme("united"),
+  "University of Washington GPA Analysis",
   page_one,
   page_two,
   page_three,
   page_four
 )
+

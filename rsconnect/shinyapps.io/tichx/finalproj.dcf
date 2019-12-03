@@ -1,0 +1,13 @@
+name: finalproj
+title: finalproj
+username:
+account: tichx
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1553499
+bundleId: 2635232
+url: https://tichx.shinyapps.io/finalproj/
+when: 1575360119.01065
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .RData|data/.DS_Store|scripts/.DS_Store|scripts/.Rapp.history|scripts/.RData
