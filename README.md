@@ -6,7 +6,7 @@ A link to the shiny app can be found [here](https://tichx.shinyapps.io/finalproj
 
 We are glad to see you here! As fellow UW students, one of the most frustrating situations to find yourself in is a course where all of your friends are in the "easier section". For most of us, it feels like this happens __all of the time__. This data visualization study hopes to dismystify such perception. 
 
-# About our Dataset
+# About our dataset
 
 In January 2019, the University of Washington responded to a Freedom of Information Act request (FOIA #16-456 and others) for "the grade distributions by percent and/or letter grade, for every class [...] at the University of Washihngton at Seattle". This dataset, now available on github, contains the breakdown of GPA for every course at The University of Washington. As noted in the FOIA response, some data was withheld to maintain FERPA compliance. 
 
@@ -49,7 +49,7 @@ We used a Shiny App to document our investigation and analysis of the data. In m
 
 * Keyan Ding: dingk4@uw.edu
 
-* Chloe Chen: liuk25@uw.edu
+* Chloe Chen: cchloeyy@gmail.com
 
 # Link to the data set we used
 * https://github.com/tichx/uw_gpa_dataset
