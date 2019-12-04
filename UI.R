@@ -15,7 +15,7 @@ front_page <- tabPanel(
     '<h2 class="display-3">About University of Washington GPA Analysis</h2>',
     '<p class="lead">This is a set of tools and data that helps you explore the
     history of student performance of courses offered from Autumn 2010 to
-    Autumn 2018 at University of Washington.</p>',
+    Autumn 2018 at University of Washington</p>',
     '<hr class="my-4">',
     '<p class="lead">A bit of background</p>',
     '<p>Lots of students go to sites like ratemyprofessor.com or UW’s own
@@ -26,7 +26,8 @@ front_page <- tabPanel(
     '<p class="lead"><br>Objectives</p>',
     '<p>We aim to eliminate the scarcity of course data by providing you with
     visualizations and filters to help you get done your measurement of course
-    difficulty. <br><br>In addition, we would love to help you make better decisions at
+    difficulty.</p>',
+    '<p>In addition, we would love to help you make better decisions at
     course registration, so we cleaned, aggregated, and analyzed course data across
     years to expose you to the most accurate student performance history in your
     courses.</p>',
@@ -36,8 +37,8 @@ front_page <- tabPanel(
     including the distribution/percentage of failure and 4.0 grades, serves
     as a good reflection of the difficulty level. Therefore, say if you want
     to learn about the difficulty of a specific course, you can go to the
-    "GPA by course" and "Best & worst class" tabs.
-    <br><br>Despite this, we add and make two more dimensions of our GPA data
+    "GPA by course" and "Best & worst class" tabs.</p>',
+    '<p>Despite this, we add and make two more dimensions of our GPA data
     available - the average GPA/4.0 GPA by “school” and “department”
     respectively - to get you informed of the trend or outliers of
     difficulties, in terms of grades,  across courses within your concerned
@@ -46,7 +47,7 @@ front_page <- tabPanel(
     upper-level classes; If you don’t have a major yet, no worries! you can
     utilize both as comparison tools to get insights of student performance
     across different schools/departments and then intend for the one that
-    best fits you!</p>', 
+    best fits you!</p>',
     '<p class="lead"><br>Our data</p>',
     '<p>We obtained a set of data from UW public record office by email
     request.The office then gave us a total of 9 files. The data from the
