@@ -300,7 +300,7 @@ avg_gpa_chart <- function(df, input_dept, input_level) {
                          group_by(dept_abbrev) %>%
                          summarise(count = length(dept_abbrev)) %>%
                          arrange(-count) %>%
-                         top_n(5, wt = count) %>%
+                         top_n(3, wt = count) %>%
                          select(dept_abbrev))
   
   # Build an interactive chart that displays the average GPA for each
@@ -329,10 +329,10 @@ avg_gpa_chart <- function(df, input_dept, input_level) {
                                "</b><br><br>Class size:", combined_dept_df[["avg_student"]], "students on average",
                                "<br>GPA:", combined_dept_df[["avg_gpa"]], "on average",
                                "<br>First offered:", combined_dept_df[["first_offered"]],
-                               "<br>last offered:", combined_dept_df[["last_offered"]]
+                               "<br>Last offered:", combined_dept_df[["last_offered"]]
                              )
       ),
-      marker = list(size = combined_dept_df[["avg_student"]] / 3),
+      marker = list(size = combined_dept_df[["avg_student"]] / 2),
       color = ~course_level
     ) %>%
       layout(
@@ -341,14 +341,14 @@ avg_gpa_chart <- function(df, input_dept, input_level) {
         yaxis = list(title = "Average GPA"),
         autosize = F, width = 1200, height = 825, margin = list(l = 50, r = 50, b = 125, t = 100, pad = 4),
         showlegend = F,
-        plot_bgcolor = "rgb(246, 246, 246)"
-        #annotations = list(
-        #  x = 0.0075, y = 1.55,
-        #  text = paste0(combined_dept_df[["dept_abbrev"]], " courses"),
-        #  showarrow = F, xref = "paper", yref = "paper",
-        #  font = list(size = 13), xanchor = "middle",
-        #  yanchor = "top"
-        #)
+        plot_bgcolor = "rgb(246, 246, 246)",
+        annotations = list(
+          x = 0.0075, y = 1.05,
+          text = paste0(combined_dept_df[["dept_abbrev"]], " course"),
+          showarrow = F, xref = "paper", yref = "paper",
+          font = list(size = 13), xanchor = "middle",
+          yanchor = "top"
+        )
       )
   })
   ### In some cases plots is NULL! Better solution?
