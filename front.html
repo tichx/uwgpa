@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Homepage</title>
+    </head>
+    <body>
+        <div style="width: 100%;
+            padding-right: 250px;
+            padding-left: 250px;
+            margin-right: auto;
+            margin-left: auto;">
+            <div class="jumbotron">
+                <h1 class="display-3" style="color: white"><strong>Welcome!</strong></h1>
+                <p style="color: white">University of Washington GPA Analysis</p>
+                <br><br><br><br><br><br>
+            </div>
+            <img src="uw.png" align="top" width="291.6" height="196.344">
+            <h2 class="display-3">About University of Washington GPA Analysis</h2>
+            <p class="lead">This is a set of tools and data that helps you explore the
+                history of student performance of courses offered from Autumn 2010 to
+            Autumn 2018 at University of Washington.</p>
+            <hr class="my-4">
+            <p class="lead">A bit of background</p>
+            <p>Lots of students go to sites like ratemyprofessor.com or UW’s own
+                course evaluation site to learn more about their courses before they commit.
+                Often time they also ask recommendations from friends and peers. However,
+                the information they can reach is often made up of single data points and
+            thus is limited and subjective.</p>
+            <p class="lead"><br>Objectives</p>
+            <p>We aim to eliminate the scarcity of course data by providing you with
+                visualizations and filters to help you get done your measurement of course
+                difficulty. <br><br>In addition, we would love to help you make better decisions at
+                course registration, so we cleaned, aggregated, and analyzed course data across
+                years to expose you to the most accurate student performance history in your
+            courses.</p>
+            <p class="lead"><br>What questions can be answered?</p>
+            <p>As mentioned above, we hope to help you make an accurate assessment of
+                course difficulty. We conjectured that the grade/GPA distribution,
+                including the distribution/percentage of failure and 4.0 grades, serves
+                as a good reflection of the difficulty level. Therefore, say if you want
+                to learn about the difficulty of a specific course, you can go to the
+                "GPA by course" and "Best & worst class" tabs.
+                <br><br>Despite this, we add and make two more dimensions of our GPA data
+                available - the average GPA/4.0 GPA by “school” and “department”
+                respectively - to get you informed of the trend or outliers of
+                difficulties, in terms of grades,  across courses within your concerned
+                school or department. If you have a major, great job! They can help you
+                plan ahead and register for class wisely as you continue to take many
+                upper-level classes; If you don’t have a major yet, no worries! you can
+                utilize both as comparison tools to get insights of student performance
+                across different schools/departments and then intend for the one that
+            best fits you!</p>
+            <p class="lead"><br>Our data</p>
+            <p>We obtained a set of data from UW public record office by email
+                request.The office then gave us a total of 9 files. The data from the
+                nine files each represents different information regarding student
+                course average GPA distribution, enrollments, course evaluations, and etc.
+                We put all the data from 9 file into 1 file - “uw_courses.csv” through R.
+                After that, we processed the raw data, and extrapolated the new file which
+                is going to be the only file that we will use moving forward to reduce
+            complexity. We also ensured that all of our data are FERPA safe.</p>
+            <br><br>
+        </div>
+    </body>
+    <style type="text/css">
+    p {
+    font-size: 130%;
+    line-height: 1.5;
+    }
+    .jumbotron {
+  padding: 2rem 1rem;
+  margin-bottom: 2rem;
+  background-image: url("suz.jpg");
+
+  background-size: cover;
+  border-radius: 0.3rem;
+}
+    </style>
+</html>
