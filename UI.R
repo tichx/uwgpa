@@ -7,7 +7,7 @@ library(shinythemes)
 
 
 front_page <- tabPanel(
-  "About",
+  "Home",
   includeHTML("front.html")
 )
 
@@ -39,7 +39,7 @@ page_one <- tabPanel(
                      "Undergraduate Academic Affairs" = "Undergraduate Academic Affairs",
                      "Others" = "NA"
                    ),
-                   selected = "UW"
+                   selected = "College of Engineering"
       ),
     ),
     mainPanel(
@@ -122,7 +122,7 @@ page_three <- tabPanel(
     sidebarPanel(
       label = h3("Lookup a course"),
       width = 2,
-      textInput("text", label = h3("Course"), value = "INFO 201"),
+      textInput("text", label = h3("Course"), value = "CSE 143"),
       p("Enter course code + course number, i.e. \"cse 154\". Please put white space in between.")
     ),
     mainPanel(
@@ -183,7 +183,7 @@ page_four <- tabPanel(
       numericInput(
         inputId = "sample_num",
         label = "Show top N",
-        value = 10,
+        value = 15,
         min = 1,
         max = NA
       )
@@ -198,7 +198,7 @@ page_four <- tabPanel(
 
 
 summary <- tabPanel(
-  "Summary",
+  "Report",
     includeHTML("summary.html")
 )
 
@@ -208,5 +208,5 @@ my_ui <- navbarPage(
   "University of Washington GPA Analysis",
   front_page,
   summary,
-  navbarMenu("More",page_one,page_two,page_three,page_four)
+  navbarMenu("Tools",page_one,page_two,page_three,page_four)
 )
