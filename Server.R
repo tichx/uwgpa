@@ -7,6 +7,9 @@ library(tidyr)
 
 df <- read.csv("data/uw_courses.csv", stringsAsFactors = F)
 
+
+
+
 plot_course <- function(df, class) {
   new_df <- df %>% 
     mutate(course_code = paste(dept_abbrev,course_no)) %>% 
@@ -60,8 +63,8 @@ get_chart_text <- function(df, class) {
       avg_gpa = round(sum(as.numeric(avg_gpa) * as.numeric(student_count), na.rm = T) / total_enrolled, 2),
       A_perc = round(sum(as.numeric(A) / total_enrolled, na.rm = T) * 100, 1)
     )
-  text <- paste0(new_df$course, ": ", new_df$title, " had ", new_df$total_enrolled, " students enrolled to ", new_df$sections, " section(s) in the past eight years. The class had an average GPA of ", new_df$avg_gpa, ", and ", new_df$A_perc, "% received a grade of 3.9/4.0.")
-  text
+  #text <- paste0(new_df$course, ": ", new_df$title, " had ", new_df$total_enrolled, " students enrolled to ", new_df$sections, " section(s) in the past eight years. The class had an average GPA of ", new_df$avg_gpa, ", and ", new_df$A_perc, "% received a grade of 3.9/4.0.")
+  new_df
 }
 
 plot_chart <- function(df, class) {
@@ -86,17 +89,21 @@ plot_chart <- function(df, class) {
     )
   new_df <- within(new_df, rm("course"))
   label <- c("A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F", "Withdrawl")
+  xform <- list(categoryorder = "array",
+                categoryarray = label)
   grade <- as.numeric(new_df[1, ])
   perc <- round(grade / sum(grade) * 100, 1)
   p <- plot_ly(
     x = label,
     y = grade,
     type = "bar",
+    text = paste0(perc, "%"),
+    textposition = 'auto',
     hovertemplate = paste0(perc, "% students received ", label)
   ) %>%
     layout(
       title = paste("Grade distribution for", class),
-      xaxis = list(title = "Grade"),
+      xaxis = xform,
       yaxis = list(title = "# of students")
     )
   p
@@ -359,13 +366,23 @@ avg_gpa_chart <- function(df, input_dept, input_level) {
 }
 
 
-my_server <- function(input, output) {
+get_ui <- function(dataframe) {
+  tagList(  
+            h6(paste0(dataframe$course, ": ", dataframe$title)),
+            p("Average GPA", h2(style="color:#E95420; padding-top:0px;margin-top:0px", dataframe$avg_gpa)),
+            p("Received 4.0", h2(style="color:#E95420; padding-top:0px;margin-top:0px", paste0(dataframe$A_perc,"%"))),
+            h6(em(paste0("from ", dataframe$sections, " section(s), ", dataframe$total_enrolled, " students")))
+          )
+}
+
+my_server <- function(input, output, session) {
   output$gg <- renderPlotly(plot_graph(df, input$radio))
   output$chart <- renderPlotly(plot_chart(df, input$text))
-  output$message <- renderText(get_chart_text(df, input$text))
+  #output$message <- renderTable(get_chart_text(df, input$text))
+  
+  output$textui <- renderUI(get_ui(get_chart_text(df, input$text)))
   output$course <- renderPlotly(plot_course(df, input$text))
   output$scatter <- renderPlotly(avg_gpa_chart(df, input$dept, input$level))
-  
   # plot the chart
   output$fail_plot <- renderPlot({
     info_data <- filter_data(df, input$department)

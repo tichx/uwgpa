@@ -5,5 +5,6 @@ library(tidyr)
 
 source("UI.R")
 source("Server.R")
+source("global.R")
 
 shinyApp(ui = my_ui, server = my_server)
