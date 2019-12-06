@@ -6,16 +6,13 @@ library(tidyr)
 library(shinythemes)
 
 
-front_page <- tabPanel(
-  "Home",
-  includeHTML("front.html")
-)
+
 
 page_one <- tabPanel(
   "GPA for every school",
   sidebarLayout(
     sidebarPanel(
-      width = 2,
+      width = 3,
       radioButtons("radio",
         label = h3("View college"),
         choices = list(
@@ -44,7 +41,7 @@ page_one <- tabPanel(
     ),
     mainPanel(
       h3("View average GPA by college"),
-      plotlyOutput(outputId = "gg", height = "750px", width = "1200px")
+      plotlyOutput(outputId = "gg", height = "750px")
     )
   )
 )
@@ -126,7 +123,7 @@ page_three <- tabPanel(
   sidebarLayout(
     sidebarPanel(
       label = h3("Lookup a course"),
-      width = 2,
+      width = 3,
       textInput("text", label = h3("Course"), value = "CSE 143"),
       helpText("Enter course code + course number, i.e. \"cse 154\". Please put white space in between."),
       hr(),
@@ -155,6 +152,9 @@ observer.observe(document, {
 });
 
 </script>'),
+      br(),
+      br(),
+      br(),
       br(),
       br(),
       br()
@@ -229,13 +229,27 @@ summary <- tabPanel(
   includeHTML("summary.html")
 )
 
+mobileDetect <- function(inputId, value = 0) {
+  tagList(
+    singleton(tags$head(tags$script(src = "js/mobile.js"))),
+    tags$input(id = inputId,
+               class = "mobile-element",
+               type = "hidden")
+  )
+}
 
 my_ui <- function(request) {
   navbarPage(
-    id = "inTabset",
+
+    collapsible = TRUE,
     theme = shinytheme("united"),
-    "UW GPA Analytica",
-    front_page,
+    "UWGPA Analytica",
+    front_page <- tabPanel(
+      "Home",
+      includeHTML("front.html"),
+      includeCSS("custom.css"),
+      tags$head(includeScript("google.js"))
+    ),
     page_three,
     navbarMenu("Reports", page_two, page_one, page_four, summary)
   )

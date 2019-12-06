@@ -10,6 +10,40 @@ df <- read.csv("data/uw_courses.csv", stringsAsFactors = F)
 
 
 
+simpleCap <- function(x) {
+  s <- strsplit(x, " ")[[1]]
+  paste(toupper(substring(s, 1,1)), substring(s, 2),
+        sep="", collapse=" ")
+}
+
+
+big_search <- function(data,last, first, class) {
+  new_df <- df %>% 
+    select(year,term,dept_abbrev,course_no,course_title,student_count,A,Aminus,avg_gpa,professor_rating,lastname,firstname) %>% 
+    mutate(class_code = paste(dept_abbrev,course_no))
+  if (last!=""){
+    new_df <- new_df %>% 
+      filter(lastname == simpleCap(tolower(last)))
+  }
+  if (first!= ""){
+    new_df <- new_df %>% 
+      filter(firstname == simpleCap(tolower(first)))
+  }
+  if (class!="") {
+    new_df<- new_df %>% 
+    filter(class_code == toupper(class))
+  }
+  new_df<- new_df %>% 
+    mutate(A_perc = round(as.numeric(A) / as.numeric(student_count) * 100,1),
+           Am_perc =round(as.numeric(Aminus) / as.numeric(student_count) * 100,1)
+           )
+  new_df
+}
+
+
+t<-big_search(df,"reges","stuart","cse 143")
+
+
 plot_course <- function(df, class) {
   new_df <- df %>% 
     mutate(course_code = paste(dept_abbrev,course_no)) %>% 
@@ -47,7 +81,7 @@ plot_course <- function(df, class) {
     layout(
       xaxis = list(title = "Students Enrolled"),
       yaxis = list(title = "Average GPA")
-    )
+    ) 
   p
 }
 
@@ -148,7 +182,7 @@ plot_graph <- function(df, school) {
       "</b><br><br>", df$sections, "section(s),", df$student, "students",
       "<br>", df$A_perc, "%", "received 4.0<br>", "GPA average:", df$avg
     ),
-    marker = list(size = sqrt(df$student)),
+    marker = list(size = sqrt(df$student)/2),
     color = ~college
   ) %>%
     layout(
@@ -346,7 +380,7 @@ avg_gpa_chart <- function(df, input_dept, input_level) {
         title = paste0("Average GPAs for ", input_dept, " Courses"),
         xaxis = list(title = "Course ID"),
         yaxis = list(title = "Average GPA"),
-        autosize = F, width = 1200, height = 825, margin = list(l = 50, r = 50, b = 125, t = 100, pad = 4),
+        autosize = F,  height = 825, width = 1200,margin = list(l = 50, r = 50, b = 125, t = 100, pad = 4),
         showlegend = F,
         plot_bgcolor = "rgb(246, 246, 246)",
         annotations = list(

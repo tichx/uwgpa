@@ -5,19 +5,17 @@
         
     </head>
     <body>
-        <div style="width: 100%;
-            padding-right: 250px;
-            padding-left: 250px;
-            margin-right: auto;
-            margin-left: auto;">
+        <div class="container">
             <div class="jumbotron">
-                <img src="uw.png" align="right" width="260" height="160">
-                <h1 class="display-3" style="color: white"><strong>Welcome!</strong></h1>
+                <div class="center-header">
+                <img src="img/uw.png" class="logo"  style="max-width:180px;">
+                <h1 class="display-3" style="color: white;"><strong>Welcome!</strong></h1>
+            </div>
             <p style="color: white">University of Washington GPA Analysis</p >
-            <br><br><br><br>
+            <br><br><br><br><br><br>
               <!--<p class="lead">
-    <a class="btn btn-primary btn-lg" href="http://uwgpa.com/finalproj/?_inputs_&inTabset=%22Search%20a%20course%22&plotly_hover-A=null&text=%22CSE%20143%22&level=%22All%22&department=%22INFO%22&.clientValue-default-plotlyCrosstalkOpts=%7B%22on%22%3A%22plotly_click%22%2C%22persistent%22%3Afalse%2C%22dynamic%22%3Afalse%2C%22selectize%22%3Afalse%2C%22opacityDim%22%3A0.2%2C%22selected%22%3A%7B%22opacity%22%3A1%7D%2C%22debounce%22%3A0%2C%22color%22%3A%5B%5D%7D&radio=%22College%20of%20Engineering%22&dept=%22Information%20School%22&sample_num=15&plotly_afterplot-A=%22%5C%22chart%5C%22%22" role="button">Search a course</a>
-  </p> -->
+    <a class="btn btn-primary btn-lg" href="/?_inputs_&text=%22CSE%20143%22&level=%22All%22&department=%22INFO%22&.clientValue-default-plotlyCrosstalkOpts=%7B%22on%22%3A%22plotly_click%22%2C%22persistent%22%3Afalse%2C%22dynamic%22%3Afalse%2C%22selectize%22%3Afalse%2C%22opacityDim%22%3A0.2%2C%22selected%22%3A%7B%22opacity%22%3A1%7D%2C%22debounce%22%3A0%2C%22color%22%3A%5B%5D%7D&radio=%22College%20of%20Engineering%22&dept=%22Information%20School%22&sample_num=15&plotly_afterplot-A=%22%5C%22chart%5C%22%22" role="button">Search a course</a>
+  </p>-->
         </div>
         <br>
         <h2 class="display-3" style="color: rgb(209, 102, 30)"><strong>About</strong></h2>
@@ -66,48 +64,22 @@
         complexity. We also ensured that all of our data are FERPA safe.</p>
         <br><br>
         <footer id="footer">
-            <div class="row">
-                <div class="col-lg-12">
-                    <ul class="list-unstyled">
-                        <li class="float-lg-right"><a href="#">Back to top</a></li>
-                        
-                        <li><a href="https://github.com/tichx/finalproj">GitHub</a></li>
-                        <li><a href="https://canvas.uw.edu/courses/1321431">Canvas</a></li>
-                        <li><a href="https://docs.google.com/document/d/1WexCUxmEMRUzp1Pd-F-vXDpLUYKewPs01FImow41nMQ/edit#heading=h.qlj9qptnowtf">PRD</a></li>
-                    </ul>
-                    <p>Made by <a href="https://github.com/tichx/finalproj">Nicholas Xu, Yuheng Zhong, Chloe Chen, Keyan Ding</a>.</p>
-                    <p>Based on <a href="https://getbootstrap.com" rel="nofollow">Bootstrap</a>. Icons from <a href="https://fontawesome.com/" rel="nofollow">Font Awesome</a>. Web fonts from <a href="https://fonts.google.com/" rel="nofollow">Google</a>.</p>
-                </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="list-unstyled">
+                    <li class="float-lg-right"><a href="#">Back to top</a></li>
+                    
+                    <li><a href="https://github.com/tichx/finalproj">GitHub</a></li>
+                    <li><a href="https://canvas.uw.edu/courses/1321431">Canvas</a></li>
+                    <li><a href="https://docs.google.com/document/d/1WexCUxmEMRUzp1Pd-F-vXDpLUYKewPs01FImow41nMQ/edit#heading=h.qlj9qptnowtf">PRD</a></li>
+                </ul>
+                <p>Made by <a href="https://github.com/tichx/finalproj">Nicholas Xu, Yuheng Zhong, Chloe Chen, Keyan Ding</a>.</p>
+                <p>Based on <a href="https://getbootstrap.com" rel="nofollow">Bootstrap</a>. Icons from <a href="https://fontawesome.com/" rel="nofollow">Font Awesome</a>. Web fonts from <a href="https://fonts.google.com/" rel="nofollow">Google</a>.</p>
             </div>
-        </footer>
+        </div>
+    </footer>
     </div>
 </body>
-<style type="text/css">
-p {
-font-size: 130%;
-line-height: 1.5;
-}
-.jumbotron {
-padding: 2rem 1rem;
-margin-bottom: 2rem;
-background-image: url("suz.jpg");
-background-size: cover;
-border-radius: 0.3rem;
-}
-#footer {
-margin: 5em 0
-}
-#footer li {
-float: left;
-margin-right: 1.5em;
-margin-bottom: 1.5em
-}
-#footer p {
-clear: left;
-margin-bottom: 0
-}
-.float-lg-right {
-float: right;
-}
+
 </style>
 </html>
