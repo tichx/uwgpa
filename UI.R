@@ -189,9 +189,11 @@ summary <- tabPanel(
 mobileDetect <- function(inputId, value = 0) {
   tagList(
     singleton(tags$head(tags$script(src = "js/mobile.js"))),
-    tags$input(id = inputId,
-               class = "mobile-element",
-               type = "hidden")
+    tags$input(
+      id = inputId,
+      class = "mobile-element",
+      type = "hidden"
+    )
   )
 }
 
