@@ -411,11 +411,11 @@ get_ui <- function(dataframe) {
 
 my_server <- function(input, output, session) {
   output$gg <- renderPlotly(plot_graph(df, input$radio))
-  output$chart <- renderPlotly(plot_chart(df, input$text))
+  output$chart <- renderPlotly(plot_chart(df, input$search_course_name))
   #output$message <- renderTable(get_chart_text(df, input$text))
   
-  output$textui <- renderUI(get_ui(get_chart_text(df, input$text)))
-  output$course <- renderPlotly(plot_course(df, input$text))
+  output$textui <- renderUI(get_ui(get_chart_text(df, input$search_course_name)))
+  output$course <- renderPlotly(plot_course(df, input$search_course_name))
   output$scatter <- renderPlotly(avg_gpa_chart(df, input$dept, input$level))
   # plot the chart
   output$fail_plot <- renderPlot({

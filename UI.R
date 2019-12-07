@@ -2,7 +2,6 @@ library(ggplot2)
 library(dplyr)
 library(plotly)
 library(shiny)
-library(tidyr)
 library(shinythemes)
 
 
@@ -118,49 +117,7 @@ page_two <- tabPanel(
   )
 )
 
-page_three <- tabPanel(
-  "Search a course",
-  sidebarLayout(
-    sidebarPanel(
-      label = h3("Lookup a course"),
-      width = 3,
-      textInput("text", label = h3("Course"), value = "CSE 143"),
-      helpText("Enter course code + course number, i.e. \"cse 154\". Please put white space in between."),
-      hr(),
-      # tableOutput(outputId = "message"),
-      uiOutput("textui"),
-      hr(),
-      bookmarkButton(style = "background-color:#E95420;", "Share this page")
-    ),
-    mainPanel(
-      h3("Grade Distribution Lookup"),
-      plotlyOutput(outputId = "chart"),
-      plotlyOutput(outputId = "course"),
-      HTML('<script type="text/javascript">
-  
-var observer = new MutationObserver(function(mutations, observer) {
-    var x = document.querySelectorAll("g.pointtext text");
-    var i;
-    for (i = 0; i < x.length; i++) {
-        x[i].style.visibility = "hidden";
-    }
-});
 
-observer.observe(document, {
-  subtree: true,
-  attributes: true
-});
-
-</script>'),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br()
-    )
-  )
-)
 
 # Setting ui
 page_four <- tabPanel(
@@ -238,19 +195,72 @@ mobileDetect <- function(inputId, value = 0) {
   )
 }
 
+
+search_page <- tabPanel(
+  "Search a course",
+  includeHTML("search-header.html"),
+  br(),
+  sidebarLayout(
+    sidebarPanel(
+      label = h3("Lookup a course"),
+      width = 3,
+      textInput("search_course_name", label = h3("Search a course"), value = "MATH 126"),
+      helpText("Enter course code + course number, i.e. \"cse 154\". Please put white space in between."),
+      hr(),
+      # tableOutput(outputId = "message"),
+      uiOutput("textui"),
+      hr(),
+      bookmarkButton(style = "background-color:#E95420;", "Share this page")
+    ),
+    mainPanel(
+      plotlyOutput(outputId = "chart"),
+      plotlyOutput(outputId = "course"),
+      HTML('<script type="text/javascript">
+  
+var observer = new MutationObserver(function(mutations, observer) {
+    var x = document.querySelectorAll("g.pointtext text");
+    var i;
+    for (i = 0; i < x.length; i++) {
+        x[i].style.visibility = "hidden";
+    }
+});
+
+observer.observe(document, {
+  subtree: true,
+  attributes: true
+});
+
+mixpanel.track("Remove label on legend");
+
+$(document).on("shiny:inputchanged", function(event) {
+    
+    mixpanel.track("input changed", {"event name": event.name, "event value": event.value});
+    
+  });
+</script>'),
+
+
+      br(),
+      br(),
+      br(),
+      br(),
+      br()
+    )
+  )
+)
+
 my_ui <- function(request) {
   navbarPage(
-
     collapsible = TRUE,
     theme = shinytheme("united"),
     "UWGPA Analytica",
-    front_page <- tabPanel(
-      "Home",
+    search_page,
+    navbarMenu("GPA Data Exploration", page_two, page_one, page_four, summary),
+    about_pagge <- tabPanel(
+      "About",
       includeHTML("front.html"),
       includeCSS("custom.css"),
       tags$head(includeScript("google.js"))
-    ),
-    page_three,
-    navbarMenu("Reports", page_two, page_one, page_four, summary)
+    )
   )
 }

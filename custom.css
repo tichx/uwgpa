@@ -9,6 +9,7 @@ margin-bottom: 2rem;
 background-image: url("img/suz.jpg");
 background-size: cover;
 border-radius: 0.3rem;
+background-position: center;
 }
 #footer {
 margin: 5em 0
