@@ -195,8 +195,8 @@ search_page <- tabPanel(
     sidebarPanel(
       label = h3("Lookup a course"),
       width = 3,
-      textInput("search_course_name", label = h3("Search a course"), value = "MATH 126"),
-      helpText("Enter course code + course number in any format (cse 154, ee478, engl131)"),
+      textInput("search_course_name", label = h3("Search a course"), value = "ARCH 151"),
+      helpText("Hint: course code + number in any format, cse 154, ee478, engl131"),
       hr(),
       # tableOutput(outputId = "message"),
       uiOutput("textui"),
@@ -204,6 +204,10 @@ search_page <- tabPanel(
       bookmarkButton(style = "background-color:#E95420;", "Share this page")
     ),
     mainPanel(
+      HTML('<div class="alert alert-dismissible alert-warning">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <p class="mb-0" style="font-size:14px;">Hi there, search might be a bit slow. Thanks for being patient.</p>
+</div>'),
       plotlyOutput(outputId = "chart"),
       plotlyOutput(outputId = "course"),
       HTML('<script type="text/javascript">
@@ -221,12 +225,10 @@ observer.observe(document, {
   attributes: true
 });
 
-mixpanel.track("Remove label on legend");
+mixpanel.track("page load");
 
 $(document).on("shiny:inputchanged", function(event) {
-    
     mixpanel.track("input changed", {"event name": event.name, "event value": event.value});
-    
   });
 </script>'),
 
