@@ -186,17 +186,6 @@ summary <- tabPanel(
   includeHTML("summary.html")
 )
 
-mobileDetect <- function(inputId, value = 0) {
-  tagList(
-    singleton(tags$head(tags$script(src = "js/mobile.js"))),
-    tags$input(
-      id = inputId,
-      class = "mobile-element",
-      type = "hidden"
-    )
-  )
-}
-
 
 search_page <- tabPanel(
   "Search a course",
@@ -207,7 +196,7 @@ search_page <- tabPanel(
       label = h3("Lookup a course"),
       width = 3,
       textInput("search_course_name", label = h3("Search a course"), value = "MATH 126"),
-      helpText("Enter course code + course number, i.e. \"cse 154\". Please put white space in between."),
+      helpText("Enter course code + course number in any format (cse 154, ee478, engl131)"),
       hr(),
       # tableOutput(outputId = "message"),
       uiOutput("textui"),

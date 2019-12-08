@@ -5,6 +5,7 @@ library(tidyr)
 
 
 
+
 df <- read.csv("data/uw_courses.csv", stringsAsFactors = F)
 
 
@@ -48,10 +49,10 @@ t <- big_search(df, "reges", "stuart", "cse 143")
 
 plot_course <- function(df, class) {
   new_df <- df %>%
-    mutate(course_code = paste(dept_abbrev, course_no)) %>%
+    mutate(course_code = gsub(" ", "", paste(dept_abbrev, course_no), fixed = TRUE)) %>%
     mutate(title = paste0(course_code, ": ", course_title)) %>%
     mutate(quarter = paste0(year, term)) %>%
-    filter(course_code == toupper(class))
+    filter(course_code == toupper(gsub(" ", "", class, fixed = TRUE)))
   new_df$firstname[is.na(new_df$firstname)] <- "Prof."
   new_df$lastname[is.na(new_df$lastname)] <- "Unknown"
   new_df <- new_df %>%
@@ -88,10 +89,13 @@ plot_course <- function(df, class) {
   p
 }
 
+plot_course(df, "e e477")
+
 get_chart_text <- function(df, class) {
   new_df <- df %>%
     mutate(course = paste(dept_abbrev, course_no)) %>%
-    filter(course == toupper(class)) %>%
+    mutate(course_text_match = gsub(" ", "", paste(dept_abbrev, course_no), fixed = TRUE)) %>% 
+    filter(course_text_match == gsub(" ", "", toupper(class), fixed = TRUE)) %>%
     group_by(course) %>%
     summarize(
       sections = n(),
@@ -107,7 +111,8 @@ get_chart_text <- function(df, class) {
 plot_chart <- function(df, class) {
   new_df <- df %>%
     mutate(course = paste(dept_abbrev, course_no)) %>%
-    filter(course == toupper(class)) %>%
+    mutate(course_search_match = gsub(" ", "", paste(dept_abbrev, course_no), fixed = TRUE)) %>% 
+    filter(course_search_match == gsub(" ", "", toupper(class), fixed = TRUE)) %>%
     group_by(course) %>%
     summarize(
       A = sum(as.numeric(A), na.rm = T),
@@ -417,6 +422,8 @@ get_ui <- function(dataframe) {
   )
 }
 
+
+# main server call
 my_server <- function(input, output, session) {
   output$gg <- renderPlotly(plot_graph(df, input$radio))
   output$chart <- renderPlotly(plot_chart(df, input$search_course_name))
