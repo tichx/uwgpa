@@ -2,6 +2,7 @@ library(ggplot2)
 library(dplyr)
 library(shiny)
 library(tidyr)
+library(shinyjs)
 
 
 
@@ -94,7 +95,7 @@ plot_course(df, "e e477")
 get_chart_text <- function(df, class) {
   new_df <- df %>%
     mutate(course = paste(dept_abbrev, course_no)) %>%
-    mutate(course_text_match = gsub(" ", "", paste(dept_abbrev, course_no), fixed = TRUE)) %>% 
+    mutate(course_text_match = gsub(" ", "", paste(dept_abbrev, course_no), fixed = TRUE)) %>%
     filter(course_text_match == gsub(" ", "", toupper(class), fixed = TRUE)) %>%
     group_by(course) %>%
     summarize(
@@ -111,7 +112,7 @@ get_chart_text <- function(df, class) {
 plot_chart <- function(df, class) {
   new_df <- df %>%
     mutate(course = paste(dept_abbrev, course_no)) %>%
-    mutate(course_search_match = gsub(" ", "", paste(dept_abbrev, course_no), fixed = TRUE)) %>% 
+    mutate(course_search_match = gsub(" ", "", paste(dept_abbrev, course_no), fixed = TRUE)) %>%
     filter(course_search_match == gsub(" ", "", toupper(class), fixed = TRUE)) %>%
     group_by(course) %>%
     summarize(

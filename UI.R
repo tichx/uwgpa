@@ -40,7 +40,8 @@ page_one <- tabPanel(
     ),
     mainPanel(
       h3("View average GPA by college"),
-      plotlyOutput(outputId = "gg", height = "750px")
+      plotlyOutput(outputId = "gg", height = "750px"),
+      includeHTML("footer.html")
     )
   )
 )
@@ -175,7 +176,8 @@ page_four <- tabPanel(
     mainPanel(
       h3("Highest failure/4.0 rate from a department"),
       plotOutput(outputId = "fail_plot"),
-      plotOutput(outputId = "a_plot")
+      plotOutput(outputId = "a_plot"),
+      includeHTML("footer.html")
     )
   )
 )
@@ -183,7 +185,8 @@ page_four <- tabPanel(
 
 summary <- tabPanel(
   "Our findings",
-  includeHTML("summary.html")
+  includeHTML("summary.html"),
+  includeHTML("footer.html")
 )
 
 
@@ -195,7 +198,7 @@ search_page <- tabPanel(
     sidebarPanel(
       label = h3("Lookup a course"),
       width = 3,
-      textInput("search_course_name", label = h3("Search a course"), value = "ARCH 151"),
+      textInput("search_course_name", label = h3("Search a course"), value = "ARCH 150"),
       helpText("Hint: course code + number in any format, cse 154, ee478, engl131"),
       hr(),
       # tableOutput(outputId = "message"),
@@ -206,7 +209,7 @@ search_page <- tabPanel(
     mainPanel(
       HTML('<div class="alert alert-dismissible alert-warning">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <p class="mb-0" style="font-size:14px;">Hi there, search might be a bit slow. Thanks for being patient.</p>
+  <p class="mb-0" style="font-size:14px;">Hold on! Search might be a bit slow. Thanks for being patient.</p>
 </div>'),
       plotlyOutput(outputId = "chart"),
       plotlyOutput(outputId = "course"),
@@ -235,9 +238,7 @@ $(document).on("shiny:inputchanged", function(event) {
 
       br(),
       br(),
-      br(),
-      br(),
-      br()
+      includeHTML("footer.html")
     )
   )
 )
@@ -246,9 +247,9 @@ my_ui <- function(request) {
   navbarPage(
     collapsible = TRUE,
     theme = shinytheme("united"),
-    "UWGPA Analytica",
+    div(img(src = "img/icon.png", style = "margin-top: -14px; padding-right:10px;padding-bottom:10px", height = 60)),
     search_page,
-    navbarMenu("GPA Data Exploration", page_two, page_one, page_four, summary),
+    navbarMenu("GPA data exploration", page_one, page_two, page_four, summary),
     about_pagge <- tabPanel(
       "About",
       includeHTML("front.html"),
