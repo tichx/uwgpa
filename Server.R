@@ -48,7 +48,7 @@ big_search <- function(data, last, first, class) {
 t <- big_search(df, "reges", "stuart", "cse 143")
 
 
-plot_course <- function(df, class) {
+plot_course <- function(df, class, screen_size) {
   new_df <- df %>%
     mutate(course_code = gsub(" ", "", paste(dept_abbrev, course_no), fixed = TRUE)) %>%
     mutate(title = paste0(course_code, ": ", course_title)) %>%
@@ -87,10 +87,14 @@ plot_course <- function(df, class) {
       xaxis = list(title = "Students Enrolled"),
       yaxis = list(title = "Average GPA")
     )
+  if (screen_size < 500) {
+    p <- p %>% 
+      layout(showlegend = FALSE)
+  }
   p
 }
 
-plot_course(df, "e e477")
+plot_course(df, "e e477", 499)
 
 get_chart_text <- function(df, class) {
   new_df <- df %>%
@@ -431,7 +435,7 @@ my_server <- function(input, output, session) {
   # output$message <- renderTable(get_chart_text(df, input$text))
 
   output$textui <- renderUI(get_ui(get_chart_text(df, input$search_course_name)))
-  output$course <- renderPlotly(plot_course(df, input$search_course_name))
+  output$course <- renderPlotly(plot_course(df, input$search_course_name, input$GetScreenWidth))
   output$scatter <- renderPlotly(avg_gpa_chart(df, input$dept, input$level))
   # plot the chart
   output$fail_plot <- renderPlot({

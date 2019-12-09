@@ -243,17 +243,24 @@ $(document).on("shiny:inputchanged", function(event) {
   )
 )
 
+
+
 my_ui <- function(request) {
   navbarPage(
     collapsible = TRUE,
     theme = shinytheme("united"),
     div(img(src = "img/icon.png", style = "margin-top: -14px; padding-right:10px;padding-bottom:10px", height = 60)),
+    windowTitle="UWGPA Analytica",
     search_page,
     navbarMenu("GPA data exploration", page_one, page_two, page_four, summary),
     about_pagge <- tabPanel(
       "About",
       includeHTML("front.html"),
       includeCSS("custom.css"),
+      tags$script('$(document).on("shiny:connected", function(e) {
+  var jsWidth = screen.width;
+  Shiny.onInputChange("GetScreenWidth",jsWidth);
+});'),
       tags$head(includeScript("google.js"))
     )
   )

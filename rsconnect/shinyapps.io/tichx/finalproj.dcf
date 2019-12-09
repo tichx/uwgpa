@@ -5,8 +5,8 @@ account: tichx
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 1553499
-bundleId: 2648403
+bundleId: 2651262
 url: https://tichx.shinyapps.io/finalproj/
-when: 1575709285.24784
+when: 1575856327.01396
 asMultiple: FALSE
 asStatic: FALSE
