@@ -1,6 +1,8 @@
 # University of Washington GPA Report
 
-A link to the shiny app can be found [here](https://tichx.shinyapps.io/finalproj/)
+UWGPA.com is UW's first GPA distribution search engine for 78,000+ courses offered in the past 8 years. Has helped 3000 students to search grades information for over 100,000 times so far.
+
+Won the best project award for iSchool's Data Visualization class. Prepared over 2.4 million data points in R, visualized through Shiny, data tracking through Mixpanel, hosted on AWS.
 
 # Welcome
 
